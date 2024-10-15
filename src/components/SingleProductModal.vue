@@ -1,8 +1,13 @@
 <script setup>
-    import { ref } from 'vue'
+    import axios from 'axios';
+    import { ref,computed } from 'vue'
     const props = defineProps(['singleProduct'])
     const emits = defineEmits(['closeSingleModal'])
-    
+
+    //store
+    import {useOrderStore} from '@/stores/counter'
+    const store = useOrderStore()
+
     const closeModalHandler =()=>{
         emits('closeSingleModal')
     }
@@ -18,9 +23,21 @@
             quantity.value = 0
         }
     }
+    const cartAlart=ref(false)
+    const addCart = ()=>{
+        axios.post(`https://vue-course-api.hexschool.io/api/f0920515972/cart`,{data:{product_id:props.singleProduct.id,qty:quantity.value}}).then(res =>{
+            if(res.data.success){
+                cartAlart.value=true
+                console.log(res.data)
+                setTimeout(()=>{
+                    cartAlart.value=false
+                },2000)
+            }
+        })
+    }
 </script>
 <template>
-    <div class="h-screen w-screen  bg-white bg-opacity-50 backdrop-blur-sm">
+    <div class="h-screen w-screen bg-white bg-opacity-50 backdrop-blur-sm">
         <i class=" absolute top-2 right-2 text-3xl ri-close-large-fill" @click="closeModalHandler"></i>
         <div class="w-screen fixed bottom-0 h-[460px] bg-background rounded-t-full flex flex-col items-center shadow-white shadow-inner">
             <img :src="props.singleProduct.imageUrl" class="h-80 w-80 absolute -top-40 object-cover rounded-full shadow-white shadow-sm border-8 border-white bg-secondary" alt="">
@@ -33,18 +50,12 @@
                     <span class="text-white text-3xl font-bold mx-auto text-center">{{ quantity }}</span>
                     <i class="ri-add-large-line py-2 px-3 rounded-full bg-white text-primary text-2xl font-extrabold active:bg-gray-100"@click="addQuantity"></i>
                 </button>
-                <button class=""><i class="ri-delete-bin-fill py-2 px-3 rounded-full bg-white text-primary text-2xl font-extrabold"></i></button>
+                <button @click="addCart" class="relative">
+                    <i class="ri-shopping-basket-2-line py-2 px-3 rounded-full bg-white text-primary text-2xl font-extrabold"></i>
+                    <p class="absolute -top-0.5 -right-1 bg-red-600 font-bold px-2 text-white rounded-full"></p>
+                </button>
             </div>
         </div>
+        <h2 class="fixed top-0 left-0 p-2 bg-red-600 text-white" v-if="cartAlart">已加入購物車</h2>
     </div>
 </template>
-/* Rectangle 330 */
-
-position: absolute;
-width: 427px;
-height: 932px;
-left: 4px;
-top: -1px;
-
-background: #D9D9D9;
-opacity: 0.7;
