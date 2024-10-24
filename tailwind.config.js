@@ -7,6 +7,7 @@ export default {
                 primary: '#D88E00',
                 background:'#F5EFE2',
                 secondary:'#F3B948',
+                third:'#B1780C'
             },
             borderRadius: {
                 5: '5px',

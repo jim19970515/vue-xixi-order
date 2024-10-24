@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Order from '../views/order.vue'
+import { useOrderStore,useDetailsStore } from '@/stores/store'
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -8,12 +9,10 @@ const router = createRouter({
             path: '/',
             name: 'order',
             component: Order,
-        },
-        {
-            path: '/SingleProduct/:id',
-            name: 'SingleProduct',
-            component: () => import('../views/SingleProduct.vue'),
-            props: true,
+            async beforeEnter(to,from) {
+                const orderStore = useOrderStore()
+                await orderStore.getProduct()
+            }
         },
         {
             path:'/CheckOut',
@@ -23,18 +22,12 @@ const router = createRouter({
         {
             path:'/Details',
             name:'Details',
-            component:()=>import('../views/Details.vue')
+            component:()=>import('../views/Details.vue'),
+            async beforeEnter(to,from) {
+                const detailsStore = useDetailsStore()
+                await detailsStore.getDetailsData()
+            }
         },
-        {
-            path:'/OrderText',
-            name:'OrderText',
-            component:()=>import('../views/getOrderText.vue')
-        },
-        {
-            path:'/GetOrder',
-            name:'getOrder',
-            component:()=>import('../views/getOrder.vue')
-        }
     ],
 })
 

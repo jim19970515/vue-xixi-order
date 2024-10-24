@@ -1,11 +1,19 @@
 <script setup>
     import axios from 'axios';
     import { ref,computed } from 'vue'
-    const props = defineProps(['singleProduct'])
+    const props = defineProps({
+        singleModal:{
+            type:Boolean,
+            required:true
+        },
+        singleProduct:{
+            type:Object,
+            required:true
+        }
+    })
     const emits = defineEmits(['closeSingleModal'])
-
     //store
-    import {useOrderStore} from '@/stores/counter'
+    import {useOrderStore} from '@/stores/modules/counter'
     const store = useOrderStore()
 
     const closeModalHandler =()=>{
@@ -24,8 +32,15 @@
         }
     }
     const cartAlart=ref(false)
+    const data = {
+        product_id:'',
+        qty:0
+    }
+    data.product_id =props.singleProduct.id
+    data.qty = quantity.value
+
     const addCart = ()=>{
-        axios.post(`https://vue-course-api.hexschool.io/api/f0920515972/cart`,{data:{product_id:props.singleProduct.id,qty:quantity.value}}).then(res =>{
+        axios.post(`https://vue-course-api.hexschool.io/api/f0920515972/cart`,{data}).then(res =>{
             if(res.data.success){
                 cartAlart.value=true
                 console.log(res.data)
@@ -37,7 +52,7 @@
     }
 </script>
 <template>
-    <div class="h-screen w-screen bg-white bg-opacity-50 backdrop-blur-sm">
+    <div class="h-screen w-screen bg-white bg-opacity-50 backdrop-blur-sm z-50">
         <i class=" absolute top-2 right-2 text-3xl ri-close-large-fill" @click="closeModalHandler"></i>
         <div class="w-screen fixed bottom-0 h-[460px] bg-background rounded-t-full flex flex-col items-center shadow-white shadow-inner">
             <img :src="props.singleProduct.imageUrl" class="h-80 w-80 absolute -top-40 object-cover rounded-full shadow-white shadow-sm border-8 border-white bg-secondary" alt="">
@@ -48,11 +63,11 @@
                 <button class=""><i class="ri-subtract-fill py-2 px-3 rounded-full bg-white text-primary text-2xl font-extrabold" @click="reduceQuantity"></i></button>
                 <button class="rounded-40 bg-primary w-[160px] pl-8 pr-2 py-2 text-white flex justify-center items-center gap-2" >
                     <span class="text-white text-3xl font-bold mx-auto text-center">{{ quantity }}</span>
-                    <i class="ri-add-large-line py-2 px-3 rounded-full bg-white text-primary text-2xl font-extrabold active:bg-gray-100"@click="addQuantity"></i>
+                    <i class="ri-add-large-line py-2 px-3 rounded-full bg-white text-primary text-2xl font-extrabold active:bg-gray-100" @click="addQuantity"></i>
                 </button>
                 <button @click="addCart" class="relative">
                     <i class="ri-shopping-basket-2-line py-2 px-3 rounded-full bg-white text-primary text-2xl font-extrabold"></i>
-                    <p class="absolute -top-0.5 -right-1 bg-red-600 font-bold px-2 text-white rounded-full"></p>
+                    <!-- <p class="absolute -top-0.5 -right-1 bg-red-600 font-bold px-2 text-white rounded-full">{{ store.cartData.data.carts.length }}</p> -->
                 </button>
             </div>
         </div>
