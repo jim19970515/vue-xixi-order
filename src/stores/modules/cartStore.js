@@ -1,7 +1,7 @@
 import {ref,watchEffect} from 'vue'
 import axios from 'axios'
 import { defineStore } from "pinia"
-import { showLoading,hideLoading } from './evenButs'
+import { showLoading,hideLoading } from '../../utils/evenButs'
 
 //api
 const api = 'https://vue-course-api.hexschool.io/api/f0920515972'
@@ -30,5 +30,7 @@ export const useCartStore = defineStore('cart',()=>{
         hideLoading()
         getCartData()
     }
-return { cartModal,cartData,getCartData,deleteCartData }
+    //tableNumer
+    const tableNumber = ref()
+return { cartModal,cartData,getCartData,deleteCartData,tableNumber }
 })

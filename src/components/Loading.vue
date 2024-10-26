@@ -1,5 +1,5 @@
 <script setup>
-import { isLoading } from '@/stores/modules/evenButs';
+import { isLoading } from '@/utils/evenButs';
 </script>
 
 <template>

@@ -1,7 +1,13 @@
 <script setup>
     import { useDetailsStore } from '@/stores/store';
+    import { useRoute } from 'vue-router';
     
     const store = useDetailsStore()
+    const route = useRoute()
+    const id = route.params.id
+    store.orderId = id
+    store.getDetailsData()
+
 </script>
 <template>
     <div class="h-screen bg-background overflow-hidden">
@@ -13,7 +19,7 @@
                 <div class="grid grid-cols-2 gap-2 px-4">
                     <div class="flex gap-2 py-2 items-center justify-center h-20 border-4 border-[#960404] text-[#DC0303] rounded-10">
                         <p class="text-2xl font-bold w-14 text-center">內用桌號</p>
-                        <p class="text-4xl font-bold">01</p>
+                        <p class="text-4xl font-bold">0{{ store.detailsUserData.address }}</p>
                     </div>
                     <div class="flex gap-2 py-2 items-center justify-center h-20 border-4 border-[#960404] text-[#DC0303] rounded-10">
                         <p class="text-2xl font-bold w-14 text-center">取餐編號</p>
@@ -30,22 +36,22 @@
                     <h2 class="text-xl font-medium text-primary">訂單狀態</h2>
                     <div class="flex justify-between items-center px-6 relative">
                         <div class="flex flex-col gap-px items-center">
-                            <div class="rounded-full w-[24px] h-[24px] bg-[#B0B0B0] z-10 "></div>
-                            <p>已下單</p>
+                            <div class="rounded-full w-[24px] h-[24px] z-10" :class="!store.detailsOrderData.is_paid?'bg-[#06AB20]':'bg-[#B0B0B0]'"></div>
+                            <p :class="!store.detailsOrderData.is_paid?'text-[#06AB20]':'text-[#B0B0B0]'">已下單</p>
                         </div>
                         <div class="flex flex-col gap-px items-center">
-                            <div class="rounded-full w-[24px] h-[24px] bg-primary z-10"></div>
-                            <p class=" text-primary">已接單</p>
+                            <div class="rounded-full w-[24px] h-[24px] z-10" :class="store.detailsOrderData.is_paid?'bg-primary':'bg-[#B0B0B0]'"></div>
+                            <p :class="store.detailsOrderData.is_paid?'text-primary':'text-[#B0B0B0]'">已接單</p>
                         </div>
                         <div class="flex flex-col gap-px items-center">
                             <div class="rounded-full w-[24px] h-[24px] bg-[#B0B0B0] z-10"></div>
-                            <p>訂單完成</p>
+                            <p class="text-[#B0B0B0]">訂單完成</p>
                         </div>
                         <div class=" absolute top-1/4 border-t-2 mx-4 border-black w-4/6 "></div>
                     </div>
                 </div>
                 <!-- 付款狀態 -->
-                    <div class="flex justify-between items-center p-4 border-b-2 border-primary ">
+                    <div class="flex justify-between items-center p-4 border-b-2 border-primary">
                     <h2 class="text-xl font-medium text-primary">付款狀態</h2>
                         <div class="flex items-center gap-2">
                             <div class="flex items-center px-2 text-base text-[#BB09F4] font-bold bg-white border-2 border-[#BB09F4] rounded-10">
@@ -73,13 +79,16 @@
             </div>
         </div>
         <div class=" absolute bottom-0 w-screen">
-            <div class="bg-primary flex justify-end px-4">
-                <div class="flex items-center gap-2 my-2 p-2 bg-white rounded-5">
-                    <p>總計</p>
-                    <p class="text-[#DC0303] font-bold text-xl">NT ${{ store.detailsTotal }}</p>
+            <div class="bg-primary flex justify-end px-4 ">
+                <div class="flex items-center gap-2 my-2 p-2 bg-background rounded-10  border-4 border-[#DC0303]">
+                    <p class="text-xl">總計</p>
+                    <p class="font-bold text-3xl text-[#DC0303]">NT ${{ store.detailsTotal }}</p>
                 </div>
             </div>
             <p class="p-2 text-center bg-background">餐點如有問題，請洽服務人員</p>
         </div>
+        <Teleport to="body">
+            <Loading/>
+        </Teleport>
     </div>
 </template>

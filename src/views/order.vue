@@ -6,6 +6,8 @@ import CartModal from '../components/CartModal.vue'
 import TableNumber from '../components/TableNumber.vue'
 import Loading from '@/components/Loading.vue'
 import { useCartStore } from '@/stores/store'
+import camera from '@/components/camera.vue'
+import { useRoute } from 'vue-router'
 
 const category = reactive(['套餐','吐司','漢堡', '蛋餅', '炒麵', '炸物', '飲品'])
 
@@ -39,12 +41,18 @@ const tableNumber = ref()
 const chooseNumber = (number)=>{
     tableNumber.value = number
 }
+
+const route = useRoute()
+const id = route.params.id
+store.tableNumber = id
+
+
 </script>
 <template>
-    <div class="h-screen bg-background overflow-hidden -z-50">
-        <div class="flex flex-row items-center px-4 py-2 text-white">
-            <span class=" bg-primary rounded-20 px-2 z-20">桌號 {{ tableNumber }}</span>
-            <h1 class="text-center mx-auto text-white bg-primary rounded-20  text-xl font-bold px-2 z-20 shadow-md">XX精緻早午餐</h1>
+    <div class="h-screen bg-background overflow-hidden -z-20">
+        <div class="flex flex-rowc justify-between items-center px-4 py-2 text-white">
+            <span class=" bg-primary rounded-20 px-2 z-20">桌號 {{ id }}</span>
+            <h1 class="text-center mr-4 text-white bg-primary rounded-20 text-xl font-bold px-2 z-20 shadow-md">XX精緻早午餐</h1>
             <i class="ri-shopping-cart-line bg-primary rounded-20 px-2 z-20" @click="cartModelHandler"></i>
         </div>
         <div class="flex">
@@ -55,7 +63,7 @@ const chooseNumber = (number)=>{
         </div>
         <Products :select-category="selectCategory" @toggle-single-productModal="closeSingleModal" class="z-10"/>
         <Teleport to='body'>
-            <Transition name="productModal" enter-from-class="transform translate-y-full opacity-0" enter-to-class="transform translate-y-0 opacity-100 duration-500" leave-active-class="transform -translate-y-full opacity-0 duration-500">
+            <Transition name="productModal" type="transition" enter-from-class="transform translate-y-full opacity-0" enter-to-class="transform translate-y-0 opacity-100 duration-500" leave-active-class="transform -translate-y-full opacity-0 duration-500">
                 <SingleProductModal v-if="singleModalProps.singleModal" v-bind="singleModalProps" @close-single-modal="closeSingleModal" class="fixed bottom-0" />
             </Transition>
         </Teleport>
@@ -64,7 +72,10 @@ const chooseNumber = (number)=>{
         <Teleport to="body">
             <Loading/>
         </Teleport>
-        <img class="fixed -top-32 -left-32 rotate-45 z-10" src="/src/assets/image/tableRunner.png" alt="">
-        <img class="fixed -bottom-32 -right-32 -rotate-45 z-10" src="/src/assets/image/tableRunner.png" alt="">
+        <img class="fixed -top-32 -left-32 rotate-45" src="/src/assets/image/tableRunner.png" alt="">
+        <img class="fixed -bottom-32 -right-32 -rotate-45" src="/src/assets/image/tableRunner.png" alt="">
+        <Teleport to='body'>
+            <camera v-if="false"/>
+        </Teleport>
     </div>
 </template>

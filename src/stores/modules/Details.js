@@ -1,7 +1,8 @@
-import {ref,reactive, watchEffect,computed,watch} from 'vue'
+import {ref,reactive,watchEffect,computed} from 'vue'
 import { defineStore } from "pinia";
 import axios from "axios";
 import { useCheckOut } from './checkOut';
+import { showLoading,hideLoading } from '@/utils/evenButs';
 
 const api = 'https://vue-course-api.hexschool.io/api/f0920515972'
 
@@ -22,20 +23,24 @@ export const useDetailsStore = defineStore('Details',()=>{
     })
     const checkOutStore = useCheckOut()
 
-    const localId = computed(()=>{
-        const orderId = localStorage.getItem('orderId')
-        return orderId
-    })
+    // const localId = computed(()=>{
+    //     const orderId = localStorage.getItem('orderId')
+    //     return orderId
+    // })
+    const orderId = ref('')
 
     const getDetailsData = async() =>{
-        const orderId = checkOutStore.orderId !== ''? checkOutStore.orderId : localId.value; 
-        const {data} = await axios.get(`${api}/order/${orderId}`)
-        localStorage.setItem('orderId',orderId)
+        showLoading()
+        // const orderId = checkOutStore.orderId !== ''? checkOutStore.orderId : localId.value; 
+        const {data} = await axios.get(`${api}/order/${orderId.value}`)
+        hideLoading()
+        // localStorage.setItem('orderId',orderId)
         //訂單內容
         detailsOrderData.create_at = data.order.create_at
         detailsOrderData.id = data.order.id
         detailsOrderData.is_paid = data.order.is_paid
         detailsOrderData.message = data.order.message
+        detailsUserData.address = data.order.address
         detailsOrderData.payment_method = data.order.payment_method
         //餐點內容
         detailsOrderData.products = Object.values(data.order.products)
@@ -56,5 +61,5 @@ export const useDetailsStore = defineStore('Details',()=>{
         const dateString = `${year}-${month}-${day} ${hours}:${minutes}`
         return dateString
     })
-    return {detailsOrderData,detailsTotal,detailsUserData,getDetailsData,detailsDate}
+    return {detailsOrderData,detailsTotal,detailsUserData,getDetailsData,detailsDate,orderId}
 })

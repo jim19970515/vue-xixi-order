@@ -22,7 +22,7 @@ const goCheckOut = () =>{
                     <i class="ri-arrow-left-line"></i>
                     <span>繼續購物、、</span>
                 </div>
-                <span>桌號：01</span>
+                <span>桌號：{{ store.tableNumber }}</span>
             </div>
             <h1 class="py-2 text-center w-full bg-white text-primary">購物車清單</h1>
             <div v-if="store.cartData.product.length > 0" class="overflow-y-auto max-h-full mb-auto mt-2">
