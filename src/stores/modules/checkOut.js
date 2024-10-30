@@ -39,17 +39,20 @@ export const useCheckOut = defineStore('CheckOut',()=>{
     checkData.user.address = cartStore.tableNumber
     const orderId = ref('')
     const data = checkData
+    const userInputClass = ref(false)
+    const telInputClass = ref(false)
     const updateOrderData = async()=>{
-        if(checkData.user.name !=''&& checkData.user.name !=''){
+        if(checkData.user.name !=''&& checkData.user.tel.toString().length >0){
             await axios.post(`${api}/order`,{data}).then(res=>{
                 orderId.value = res.data.orderId
             })
             localStorage.setItem('userData',JSON.stringify(checkData.user))
             router.push({name:'Details',params:{id:orderId.value}})
-        }else{
-            showAlert()
-            hideAlert()
+        }else if(checkData.user.name ==''){
+            userInputClass.value = true
+        }else if(checkData.user.tel.toString().length == 0){
+            telInputClass.value = true
         }
     }
-    return {checkData,orderId,isPayCash,updateOrderData}
+    return {checkData,orderId,isPayCash,updateOrderData,userInputClass,telInputClass}
 })

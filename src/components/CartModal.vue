@@ -26,16 +26,16 @@ const goCheckOut = () =>{
             </div>
             <h1 class="py-2 text-center w-full bg-white text-primary">購物車清單</h1>
             <div v-if="store.cartData.product.length > 0" class="overflow-y-auto max-h-full mb-auto mt-2">
-                <div class="bg-white p-2 mt-2 relative" v-for="item in store.cartData.product" :key="item.id"> 
+                <div class="bg-white p-2 mt-2 relative h-36" v-for="item in store.cartData.product" :key="item.id"> 
                     <div class="flex justify-between">
                         <div class="flex flex-col">
-                            <h2>{{ item.product.title }}</h2>
+                            <h2 class="text-xl font-medium">{{ item.product.title }}</h2>
                             <p>{{ item.product.content }}</p>
                             <p>商品數量 {{ item.product.num }}</p>
                             <p class="text-primary text-2xl font-bold">{{ item.total }}</p>
                         </div>
-                        <img :src="item.product.imageUrl" class="object-cover w-[104px] h-[104px]" alt="">
-                        <button class=" absolute bottom-2 right-2 text-white bg-primary" @click="store.deleteCartData(item.id)">刪除</button>
+                        <img :src="item.product.imageUrl" class="object-cover w-32 h-32 rounded-20" alt="">
+                        <button class=" absolute bottom-2 right-2 text-white bg-primary px-2" @click="store.deleteCartData(item.id)">刪除</button>
                     </div>
                 </div>
             </div>

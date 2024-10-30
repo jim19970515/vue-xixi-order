@@ -1,17 +1,26 @@
 <script setup>
     import { useDetailsStore } from '@/stores/store';
     import { useRoute } from 'vue-router';
+    import CustomerInfo from '@/components/CustomerInfo.vue';
+    import { useCustomerInfo } from '@/stores/store';
+    import router from '@/router';
     
     const store = useDetailsStore()
     const route = useRoute()
     const id = route.params.id
     store.orderId = id
     store.getDetailsData()
+    const infoStore = useCustomerInfo()
 
+    const goHome = () =>{
+        router.push({name:'SelectTable'})
+    }
 </script>
 <template>
     <div class="h-screen bg-background overflow-hidden">
-        <h1 class=" py-4 text-primary text-xl font-bold text-center">XX精緻早午餐</h1>
+        <h1 class="py-4 text-primary text-xl font-bold text-center">心心精緻早午餐</h1>
+        <i class="absolute top-4 left-4 ri-home-office-fill text-white text-2xl bg-primary px-1 rounded-full" @click="goHome"></i>
+        <i class="absolute top-4 right-4 ri-user-search-fill text-white text-2xl bg-primary px-1 rounded-full" @click="infoStore.toggleInfoModal"></i>
         <div class="h-8 bg-primary"></div>
         <div class="flex items-center justify-between px-4">
             <div class="w-full mx-4 pt-4 border-2 border-y-0 border-[#B79448]">
@@ -79,7 +88,7 @@
             </div>
         </div>
         <div class=" absolute bottom-0 w-screen">
-            <div class="bg-primary flex justify-end px-4 ">
+            <div class="bg-primary flex justify-end px-8">
                 <div class="flex items-center gap-2 my-2 p-2 bg-background rounded-10  border-4 border-[#DC0303]">
                     <p class="text-xl">總計</p>
                     <p class="font-bold text-3xl text-[#DC0303]">NT ${{ store.detailsTotal }}</p>
@@ -89,6 +98,9 @@
         </div>
         <Teleport to="body">
             <Loading/>
+        </Teleport>
+        <Teleport to="body">
+            <CustomerInfo v-if="infoStore.InfoModal"/>
         </Teleport>
     </div>
 </template>

@@ -1,6 +1,7 @@
 <script setup>
     import axios from 'axios';
     import { ref,computed } from 'vue'
+    import { useCartStore } from '@/stores/store';
     const props = defineProps({
         singleModal:{
             type:Boolean,
@@ -12,9 +13,6 @@
         }
     })
     const emits = defineEmits(['closeSingleModal'])
-    //store
-    import {useOrderStore} from '@/stores/modules/counter'
-    const store = useOrderStore()
 
     const closeModalHandler =()=>{
         emits('closeSingleModal')
@@ -39,14 +37,14 @@
     data.product_id =props.singleProduct.id
     data.qty = quantity.value
 
-    const addCart = ()=>{
-        axios.post(`https://vue-course-api.hexschool.io/api/f0920515972/cart`,{data}).then(res =>{
+    const addCart = async()=>{
+        await axios.post(`https://vue-course-api.hexschool.io/api/f0920515972/cart`,{data}).then(res =>{
             if(res.data.success){
                 cartAlart.value=true
                 console.log(res.data)
-                setTimeout(()=>{
-                    cartAlart.value=false
-                },2000)
+                const store = useCartStore()
+                store.getCartData()
+                closeModalHandler()
             }
         })
     }
@@ -65,9 +63,8 @@
                     <span class="text-white text-3xl font-bold mx-auto text-center">{{ quantity }}</span>
                     <i class="ri-add-large-line py-2 px-3 rounded-full bg-white text-primary text-2xl font-extrabold active:bg-gray-100" @click="addQuantity"></i>
                 </button>
-                <button @click="addCart" class="relative">
+                <button @click="addCart">
                     <i class="ri-shopping-basket-2-line py-2 px-3 rounded-full bg-white text-primary text-2xl font-extrabold"></i>
-                    <!-- <p class="absolute -top-0.5 -right-1 bg-red-600 font-bold px-2 text-white rounded-full">{{ store.cartData.data.carts.length }}</p> -->
                 </button>
             </div>
         </div>

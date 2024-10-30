@@ -1,5 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Order from '../views/order.vue'
+import TableSelection from '../views/TableSelection.vue'
+import SelectTable from '@/views/SelectTable.vue'
+import camera from '../components/camera.vue'
 import { useOrderStore } from '@/stores/store'
 
 const router = createRouter({
@@ -7,8 +10,21 @@ const router = createRouter({
     routes: [
         {
             path: '/',
-            name: 'TableNumer',
-            component: ()=>import('../views/TableNunber.vue'),
+            name: 'TableSelection',
+            component: TableSelection,
+            redirect: '/SelectTable',
+            children:[
+                {
+                    path:'SelectTable',
+                    name:'SelectTable',
+                    component: SelectTable
+                },
+                {
+                    path: 'Camera',
+                    name: 'Camera',
+                    component: camera
+                },
+            ]
         },
         {
             path: '/Order/:id',

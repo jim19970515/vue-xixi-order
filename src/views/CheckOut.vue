@@ -6,11 +6,11 @@
     
     const store = useCheckOut()
     const cartStore = useCartStore()
-    //取得顧客資料
+    //取得儲存的顧客資料
     const getData = localStorage.getItem('userData')
     const getDataArr = JSON.parse(getData)
     store.checkData.user.tel = getDataArr.tel
-    store.checkData.value = getDataArr.name
+    store.checkData.user.name = getDataArr.name
     //返回故物車
     const goCart =()=>{
         router.replace(`/order/${cartStore.tableNumber}`)
@@ -19,6 +19,17 @@
     //判斷class
     const payCash = computed(()=>{
         return store.isPayCash? ['text-primary','bg-white',]:['text-white','bg-[#E0A533]']
+    })
+    //inpuStyle
+    const nameStyle = computed(()=>{
+        if(store.checkData.user.name == ''){
+            return store.userInputClass? ['animate__animated','animate__shakeX','ring-4','ring-red-500']:''
+        }
+    })
+    const telStyle = computed(()=>{
+        if(store.checkData.user.tel.toString() == ''){
+            return store.telInputClass? ['animate__animated','animate__shakeX','ring-4','ring-red-500']:''
+        }
     })
 </script>
 <template>
@@ -40,18 +51,22 @@
             <h2 class="mx-auto py-2 text-lg fnot-bold text-white">填寫聯絡方式</h2>
             <div class="grid grid-cols-4 gap-2">
                 <label for="name" class="p-2 text-center rounded-20 bg-[#E0A533] text-white font-bold">姓名</label>
-                <input type="text" placeholder="lastName" class="col-span-3 p-2 text-center rounded-20 bg-[#E0A533] text-white placeholder:text-white placeholder:font-bold outline-0 focus:ring-2 ring-white" v-model.trim="store.checkData.user.name">
+                <input type="text" placeholder="lastName" class="col-span-3 p-2 text-center rounded-20 bg-[#E0A533] text-white placeholder:text-white placeholder:font-bold outline-0 focus:ring-2 ring-white" :class="nameStyle" v-model.trim="store.checkData.user.name">
             </div>
             <div class="grid grid-cols-4 gap-2 mt-4">
                 <label for="mail" class="p-2 text-center rounded-20 bg-[#E0A533] text-white font-bold">電話</label>
-                <input type="number" placeholder="number" class="col-span-3 p-2 text-center rounded-20 bg-[#E0A533] text-white placeholder:text-white placeholder:font-bold outline-0 focus:ring-2 ring-white" v-model.number.trim="store.checkData.user.tel">
+                <input type="number" min="0" placeholder="number" class="col-span-3 p-2 text-center rounded-20 bg-[#E0A533] text-white placeholder:text-white placeholder:font-bold outline-0 focus:ring-2 ring-white" :class="telStyle" v-model.number.trim="store.checkData.user.tel">
             </div>
             <label class="mx-auto py-2 text-lg fnot-bold text-white">備註</label>
             <textarea  class="bg-[#E0A533] rounded-20 h-full p-2 pl-4 text-xl text-white font-bold outline-0  focus:ring-2 ring-white" style="resize:none;" v-model.trim="store.checkData.message"></textarea>
             <button class="mx-auto bg-white text-primary py-3 px-12 my-2 text-3xl font-extrabold rounded-xl" @click="store.updateOrderData">送出訂單</button>
         </div> 
         <Teleport to="body">
-            <Transition enter-active-class="animate-bounce" leave-active-class="">
+            <Transition 
+            enter-to-class="fixed left-1/2 -translate-x-1/2" 
+            enter-active-class="animate__animated animate__backInDown translate-y-4 duration-500" 
+            leave-active-class="animate__animated animate__backInDown translate-y-4 duration-500"
+            leave-from-class="fixed left-1/2 -translate-x-1/2">
                 <MessageBox/>
             </Transition>
         </Teleport>
