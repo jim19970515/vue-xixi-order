@@ -27,7 +27,7 @@ const filterProduct = computed(()=>{
 })
 </script>
 <template>
-  <div class="flex flex-col h-full px-4 gap-4 pt-2">
+  <div class="flex flex-col h-[calc(100vh-312px)] p-4 gap-4">
       <h2 class="pl-2 text-primary text-3xl font-bold">
         <i class="ri-restaurant-2-line"></i>
         <span class="pl-1">{{ selectCategory }}</span>

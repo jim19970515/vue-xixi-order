@@ -1,13 +1,18 @@
 <script setup>
-import {ref,reactive} from 'vue'
+import {ref,reactive,onMounted} from 'vue'
 import SingleProductModal from '../components/SingleProductModal.vue'
 import Products from '../components/Products.vue'
 import CartModal from '../components/CartModal.vue'
 import Loading from '@/components/Loading.vue'
-import { useCartStore } from '@/stores/store'
-import camera from '@/components/camera.vue'
+import { useCartStore, useOrderStore } from '@/stores/store'
+import camera from '@/components/Camera.vue'
 import { useRoute } from 'vue-router'
 import { getAssetsFile } from '@/utils/getUrls'
+
+const orderStore = useOrderStore()
+onMounted(async() => {
+    await orderStore.getProduct()
+})
 
 const category = reactive([
     {title:'套餐',imgUrl:getAssetsFile('套餐icon.png')},
