@@ -5,21 +5,17 @@ const router = createRouter({
   routes: [
     {
       path: "/",
-      name: "TableSelection",
-      component: () => import("@/views/TableSelection.vue"),
       redirect: "/SelectTable",
-      children: [
-        {
-          path: "SelectTable",
-          name: "SelectTable",
-          component: () => import("@/views/SelectTable.vue"),
-        },
-        {
-          path: "Camera",
-          name: "Camera",
-          component: () => import("@/components/Camera.vue"),
-        },
-      ],
+    },
+    {
+      path: "/SelectTable",
+      name: "SelectTable",
+      component: () => import("@/views/SelectTable.vue"),
+    },
+    {
+      path: "/Camera",
+      name: "Camera",
+      component: () => import("@/views/Camera.vue"),
     },
     {
       path: "/Order/:id",
