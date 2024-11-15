@@ -16,17 +16,19 @@ export const useCartStore = defineStore('cart',()=>{
     })
     //api function
     const getCartData = async() =>{
-        const {data} = await axios.get(`${api}/cart`)
-        cartData.value.final_total = data.data.final_total //取得購物車總Total
-        cartData.value.product = data.data.carts.map(item => item) //取得購物車列表
+        try {            
+            const {data} = await axios.get(`${api}/cart`)
+            cartData.value.final_total = data.data.final_total //取得購物車總Total
+            cartData.value.product = data.data.carts.map(item => item) //取得購物車列表
+        } catch (error) {
+            console.log(error);
+            
+        }
     }
-    watchEffect(async ()=>{
-        await getCartData()
-    })
     //刪除購物車單筆
     const deleteCartData = async(CartId) =>{
         showLoading()
-        await axios.delete(`https://vue-course-api.hexschool.io/api/f0920515972/cart/${CartId}`)
+        await axios.delete(`${api}/cart/${CartId}`)
         hideLoading()
         getCartData()
     }
