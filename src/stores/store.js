@@ -1,5 +1,5 @@
 export * from './modules/counter'
 export * from './modules/cartStore'
 export * from './modules/checkOut'
-export * from './modules/Details'
-export * from './modules/CustomerInfo'
+export * from './modules/details'
+export * from './modules/customerInfo'
