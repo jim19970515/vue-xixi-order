@@ -2,13 +2,14 @@
 import Loading from "@/components/Loading.vue";
 import { useCartStore, useOrderStore } from "@/stores/store";
 import { getAssetsFile } from "@/utils/getUrls";
+import { computed, reactive } from "vue";
 
 const orderStore = useOrderStore();
 onMounted(async () => {
   await orderStore.getProduct();
 });
 
-const category = reactive([
+const category = [
   { title: "套餐", imgUrl: getAssetsFile("套餐icon.png") },
   { title: "吐司", imgUrl: getAssetsFile("toast.png") },
   { title: "漢堡", imgUrl: getAssetsFile("hamburger.png") },
@@ -17,16 +18,16 @@ const category = reactive([
   { title: "炸物", imgUrl: getAssetsFile("fries.png") },
   { title: "單點", imgUrl: getAssetsFile("eggs.png") },
   { title: "飲品", imgUrl: getAssetsFile("drink.png") },
-]);
+];
 
 //單商品彈窗
-const singleModalProps = ref({
+const singleModalProps = reactive({
   singleModal: false,
   singleProduct: {},
 });
 const closeSingleModal = (item) => {
-  singleModalProps.value.singleModal = !singleModalProps.value.singleModal;
-  singleModalProps.value.singleProduct = item;
+  singleModalProps.singleModal = !singleModalProps.singleModal;
+  singleModalProps.singleProduct = item;
 };
 //選擇商品類別
 const selectCategory = ref("套餐");
@@ -109,7 +110,7 @@ const id = route.params.id;
       >
         <SingleProductModal
           v-if="singleModalProps.singleModal"
-          v-bind="singleModalProps"
+          :singleProduct="singleModalProps.singleProduct"
           @close-single-modal="closeSingleModal"
           class="fixed bottom-0"
         />
