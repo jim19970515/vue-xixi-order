@@ -2,7 +2,6 @@
 import Loading from "@/components/Loading.vue";
 import { useCartStore, useOrderStore } from "@/stores/store";
 import { getAssetsFile } from "@/utils/getUrls";
-import { computed, reactive } from "vue";
 
 const orderStore = useOrderStore();
 onMounted(async () => {
