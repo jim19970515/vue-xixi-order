@@ -17,12 +17,14 @@
     }
 </script>
 <template>
-    <div class="h-screen bg-background">
+    <div class="bg-background h-full">
+      <div class=" sticky top-0 bg-background z-20">
         <h1 class="py-4 text-primary text-xl font-bold text-center">心心精緻早午餐</h1>
         <i class="absolute top-4 left-4 ri-home-office-fill text-white text-2xl bg-primary px-1 rounded-full" @click="goHome"></i>
         <i class="absolute top-4 right-4 ri-user-search-fill text-white text-2xl bg-primary px-1 rounded-full" @click="infoStore.toggleInfoModal"></i>
         <div class="h-8 bg-primary"></div>
-        <div class="flex items-center justify-between px-4">
+      </div>
+        <div class="flex justify-between px-4 h-[900px]">
             <div class="w-full mx-4 pt-4 border-2 border-y-0 border-[#B79448]">
                 <!-- 桌號 -->
                 <div class="grid grid-cols-2 gap-2 px-4">
@@ -87,7 +89,7 @@
                 </div>
             </div>
         </div>
-        <div class=" absolute bottom-0 w-screen">
+        <div class="fixed bottom-0 w-screen">
             <div class="bg-primary flex justify-end px-8">
                 <div class="flex items-center gap-2 my-2 p-2 bg-background rounded-10  border-4 border-[#DC0303]">
                     <p class="text-xl">總計</p>
