@@ -11,7 +11,7 @@ export const useCheckOut = defineStore("CheckOut", () => {
   const checkData = reactive({
     user: {
       name: "",
-      tel: Number,
+      tel: "",
       email: "", //用隨機數字代替
       address: "", //桌號
     },
@@ -43,7 +43,7 @@ export const useCheckOut = defineStore("CheckOut", () => {
   const userInputClass = ref(false);
   const telInputClass = ref(false);
   const updateOrderData = async () => {
-    if (checkData.user.name != "" && checkData.user.tel.toString().length > 0) {
+    if (checkData.user.name != "" && checkData.user.tel.length > 0) {
       await axios.post(`${api}/order`, { data }).then((res) => {
         orderId.value = res.data.orderId;
       });

@@ -6,7 +6,7 @@ import MessageBox from "@/components/MessageBox.vue";
 
 const store = useCheckOut();
 const cartStore = useCartStore();
-//取得儲存的顧客資料
+// 取得儲存的顧客資料
 const getData = localStorage.getItem("userData");
 const getDataArr = JSON.parse(getData);
 store.checkData.user.tel = getDataArr.tel;
@@ -33,7 +33,7 @@ const nameStyle = computed(() => {
   }
 });
 const telStyle = computed(() => {
-  if (store.checkData.user.tel.toString() == "") {
+  if (store.checkData.user.tel == "") {
     return store.telInputClass
       ? ["animate__animated", "animate__shakeX", "ring-4", "ring-red-500"]
       : "";
