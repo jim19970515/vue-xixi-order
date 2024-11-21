@@ -41,7 +41,7 @@ const reload = async () => {
 };
 </script>
 <template>
-  <div class="h-screen bg-background flex flex-col pt-20 pb-40">
+  <div class="h-screen bg-background flex flex-col pt-20 ">
     <div @click="changeHerf">
       <div
         class="w-0 h-0 border-t-[100px] border-l-[100px] border-l-transparent border-t-primary absolute right-0 top-0"
