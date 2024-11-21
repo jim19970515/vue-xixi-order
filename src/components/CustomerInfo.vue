@@ -4,7 +4,7 @@
         const infoStore = useCustomerInfo()
 </script>
 <template>
-    <div class="fixed top-0 h-screen w-screen bg-primary p-4 pb-0 z-50 overflow-hidden">
+    <div class="fixed top-0 h-screen w-screen bg-primary p-4 pb-0 z-50">
         <i class="absolute top-2 right-4 p-2 ri-close-large-fill text-white text-2xl bg-primary px-1 rounded-full" @click="infoStore.toggleInfoModal"></i>
         <div class="bg-white rounded-t-20 h-full mt-12 overflow-h-auto">
             <div class="grid grid-cols-2 gap-2 p-4 items-center">

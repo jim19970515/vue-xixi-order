@@ -17,7 +17,7 @@
     }
 </script>
 <template>
-    <div class="h-screen bg-background overflow-hidden">
+    <div class="h-screen bg-background">
         <h1 class="py-4 text-primary text-xl font-bold text-center">心心精緻早午餐</h1>
         <i class="absolute top-4 left-4 ri-home-office-fill text-white text-2xl bg-primary px-1 rounded-full" @click="goHome"></i>
         <i class="absolute top-4 right-4 ri-user-search-fill text-white text-2xl bg-primary px-1 rounded-full" @click="infoStore.toggleInfoModal"></i>
