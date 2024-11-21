@@ -7,10 +7,10 @@ import MessageBox from "@/components/MessageBox.vue";
 const store = useCheckOut();
 const cartStore = useCartStore();
 // 取得儲存的顧客資料
-const getData = localStorage.getItem("userData");
-const getDataArr = JSON.parse(getData);
-store.checkData.user.tel = getDataArr.tel;
-store.checkData.user.name = getDataArr.name;
+// const getData = localStorage.getItem("userData");
+// const getDataArr = JSON.parse(getData);
+// store.checkData.user.tel = getDataArr.tel;
+// store.checkData.user.name = getDataArr.name;
 //返回故物車
 const route = useRoute();
 const id = route.params.id;
