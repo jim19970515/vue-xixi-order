@@ -34,7 +34,7 @@ const filterProduct = computed(()=>{
       </h2>
       <div class="overflow-y-auto max-h-full z-20">
         <div class="flex flex-col gap-2">
-          <div class="flex justify-between items-center gap-2 px-4 py-2 bg-white rounded-xl shadow-md" v-for="item in filterProduct" :key="item.id">
+          <div class="flex justify-between items-center gap-2 px-4 py-2 bg-white rounded-xl shadow-md" v-for="item in filterProduct" :key="item.id" @click="toggleSingleProductModal(item)">
             <div class="flex flex-col justify-between items-start">
               <h3 class="font-medium text-xl">{{ item.title }}</h3>
               <p class="pt-2 text-sm text-gray-500">{{ item.content }}</p>
@@ -42,7 +42,7 @@ const filterProduct = computed(()=>{
             </div>
             <div class="relative bg-slate-300 rounded-xl h-[116px] w-[116px] shrink-0">
               <img :src="item.imageUrl" class="h-full rounded-xl" alt="" />
-              <button class="absolute top-0 right-0 px-2 bg-primary text-white rounded-full" @click="toggleSingleProductModal(item)">查看</button>
+              <button class="absolute top-0 right-0 px-2 bg-primary text-white rounded-full">查看</button>
             </div>  
         </div>
     </div>
