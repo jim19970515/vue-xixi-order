@@ -19,8 +19,8 @@ const goCheckOut = () => {
 };
 </script>
 <template>
-  <div class="h-screen w-screen bg-white bg-opacity-50 backdrop-blur-sm z-50">
-    <div class="flex flex-col m-4 p-4 bg-primary h-full overflow-hidden">
+  <div class="h-full w-full bg-white bg-opacity-50 backdrop-blur-sm z-50">
+    <div class="flex flex-col m-4 p-4 bg-primary h-full">
       <div class="flex justify-between items-center pb-2 text-white">
         <div class="flex items-center gap-2" @click="closeCartModal">
           <i class="ri-arrow-left-line"></i>
