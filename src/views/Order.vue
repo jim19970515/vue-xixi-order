@@ -58,7 +58,7 @@ const route = useRoute();
 const id = route.params.id;
 </script>
 <template>
-  <div class="h-screen bg-background -z-20">
+  <div class="max-h-screen bg-background -z-20 overflow-hidden">
     <div
       class="flex flex-rowc justify-between items-center px-4 py-2 text-white"
     >
