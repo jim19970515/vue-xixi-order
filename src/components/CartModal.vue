@@ -42,7 +42,7 @@ const goCheckOut = () => {
             <div class="flex flex-col">
               <h2 class="text-xl font-medium">{{ item.product.title }}</h2>
               <p>{{ item.product.content }}</p>
-              <p>商品數量 {{ item.product.num }}</p>
+              <p>商品數量 {{ item.qty }}</p>
               <p class="text-primary text-2xl font-bold">{{ item.total }}</p>
             </div>
             <img
